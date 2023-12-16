@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'homepage.dart';
+import 'signup.dart'; // Import your SignupPage
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +20,8 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
+// ... (Your existing imports)
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the form
@@ -96,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                obscureText: true,
+                obscureText: false, // Set to false to show the entered text
               ),
               TextFormField(
                 style: TextStyle(
@@ -129,6 +132,23 @@ class _LoginPageState extends State<LoginPage> {
                   'Login',
                   style: TextStyle(
                     color: Colors.black,
+                    fontFamily: 'RobotoMono',
+                  ),
+                ),
+              ),
+              SizedBox(height: 10), // Add some spacing between buttons
+              TextButton(
+                onPressed: () {
+                  // Navigate to the signup page (SignupPage)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupPage()),
+                  );
+                },
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    color: Colors.orange,
                     fontFamily: 'RobotoMono',
                   ),
                 ),
