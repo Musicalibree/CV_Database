@@ -13,6 +13,7 @@ class _SignupPageState extends State<SignupPage> {
 
   String passwordErrorText = '';
   String usernameErrorText = '';
+  bool _isPasswordVisible = false;
 
   Future<void> _signup() async {
     // Perform password validation
@@ -90,84 +91,105 @@ class _SignupPageState extends State<SignupPage> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Sign Up',
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              style: TextStyle(
-                color: Colors.orange,
-                fontFamily: 'RobotoMono',
-              ),
-              controller: usernameController,
-              decoration: InputDecoration(
-                labelText: 'Username',
-                labelStyle: TextStyle(color: Colors.white),
-                errorText: usernameErrorText,
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.orange,
-                ),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your username';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              style: TextStyle(
-                color: Colors.orange,
-                fontFamily: 'RobotoMono',
-              ),
-              controller: passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.white),
-                errorText: passwordErrorText,
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Colors.orange,
-                ),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-                return null;
-              },
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              onPressed: () {
-                // Perform signup when the button is pressed
-                _signup();
-              },
-              child: Text(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
                 'Sign Up',
                 style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'RobotoMono',
+                  color: Colors.orange,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              TextFormField(
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontFamily: 'RobotoMono',
+                ),
+                controller: usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  labelStyle: TextStyle(color: Colors.white),
+                  errorText: usernameErrorText,
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.orange,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your username';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontFamily: 'RobotoMono',
+                ),
+                controller: passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.white),
+                  errorText: passwordErrorText,
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.orange,
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        // Toggle the obscureText property of the password field
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+                obscureText: !_isPasswordVisible,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                onPressed: () {
+                  // Perform signup when the button is pressed
+                  _signup();
+                },
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'RobotoMono',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      backgroundColor: Colors.black,
     );
   }
 }

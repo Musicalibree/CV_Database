@@ -21,8 +21,6 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-// ... (Your existing imports)
-
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the form
 
@@ -71,117 +69,121 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          // Wrap the Form widget around your Column
-          key: _formKey, // Set the key for the form
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage('images/letter.png'),
-                height: 100,
-                width: 100,
-              ),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontFamily: 'RobotoMono',
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage('images/letter.png'),
+                  height: 100,
+                  width: 100,
                 ),
-                controller: usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(
-                    Icons.person,
+                TextFormField(
+                  style: TextStyle(
                     color: Colors.orange,
+                    fontFamily: 'RobotoMono',
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your username';
-                  }
-                  return null;
-                },
-                obscureText: false,
-              ),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontFamily: 'RobotoMono',
-                ),
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Colors.orange,
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        // Toggle the obscureText property of the password field
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    labelStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(
+                      Icons.person,
                       color: Colors.orange,
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
+                  obscureText: false,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                obscureText: !_isPasswordVisible,
-              ),
-
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    // Form is valid, perform login
-                    _login();
-                  }
-                },
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'RobotoMono',
-                  ),
-                ),
-              ),
-              SizedBox(height: 10), // Add some spacing between buttons
-              TextButton(
-                onPressed: () {
-                  // Navigate to the signup page (SignupPage)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignupPage()),
-                  );
-                },
-                child: Text(
-                  'Sign Up',
+                TextFormField(
                   style: TextStyle(
                     color: Colors.orange,
                     fontFamily: 'RobotoMono',
                   ),
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.orange,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  obscureText: !_isPasswordVisible,
                 ),
-              ),
-            ],
+                SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      _login();
+                    }
+                  },
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'RobotoMono',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignupPage()),
+                    );
+                  },
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.orange,
+                      fontFamily: 'RobotoMono',
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-      backgroundColor: Colors.black,
     );
   }
 }
