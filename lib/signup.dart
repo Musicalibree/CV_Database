@@ -31,7 +31,7 @@ class _SignupPageState extends State<SignupPage> {
     // Perform username validation
     if (!_validateUsername(usernameController.text)) {
       setState(() {
-        usernameErrorText = 'Username must end with "@gmail.com"';
+        usernameErrorText = 'Username must have a valid email';
       });
       return;
     } else {
@@ -74,9 +74,10 @@ class _SignupPageState extends State<SignupPage> {
 
   // Username validation function
   bool _validateUsername(String username) {
-    // Add your username validation logic here
-    // For example, requiring the username to end with "@gmail.com"
-    return username.endsWith('@gmail.com');
+    // Add your email validation logic here
+    RegExp emailRegExp =
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    return emailRegExp.hasMatch(username);
   }
 
   @override
@@ -95,7 +96,7 @@ class _SignupPageState extends State<SignupPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Create new user',
+              'Sign Up',
               style: TextStyle(
                 color: Colors.orange,
                 fontSize: 18,
@@ -113,6 +114,10 @@ class _SignupPageState extends State<SignupPage> {
                 labelText: 'Username',
                 labelStyle: TextStyle(color: Colors.white),
                 errorText: usernameErrorText,
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.orange,
+                ),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -131,6 +136,10 @@ class _SignupPageState extends State<SignupPage> {
                 labelText: 'Password',
                 labelStyle: TextStyle(color: Colors.white),
                 errorText: passwordErrorText,
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Colors.orange,
+                ),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {

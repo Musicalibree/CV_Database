@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   Future<void> _login() async {
     final response = await http.post(
@@ -92,6 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Username',
                   labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.orange,
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -99,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                obscureText: false, // Set to false to show the entered text
+                obscureText: false,
               ),
               TextFormField(
                 style: TextStyle(
@@ -110,6 +115,24 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.orange,
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        // Toggle the obscureText property of the password field
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.orange,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -117,8 +140,9 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                obscureText: true,
+                obscureText: !_isPasswordVisible,
               ),
+
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
